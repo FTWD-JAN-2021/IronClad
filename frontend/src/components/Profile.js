@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import actions from '../api'
+import TheContext from '../TheContext';
 
 function Profile(props) {
     const [myPosts, setMyPosts] = useState([])
@@ -7,9 +8,9 @@ function Profile(props) {
 
     useEffect(() => {
         console.log(props)
-        if (!props.user.email) {
-            props.history.push('/')
-        }
+        // if (!props.user.email) {
+        //     props.history.push('/')
+        // }
         actions.getMyPosts().then(res => setMyPosts(res.data))
     }, [])
 
@@ -23,11 +24,30 @@ function Profile(props) {
 
     return (
         <div>
-            <h3>{props.user?.email}</h3>
-
+            <Welcome />
             {showPosts()}
         </div>
     );
 }
+
+
+
+function Welcome(props) {
+
+    const { user, history, setUser } = useContext(TheContext)
+
+    const logOut = () => {
+        setUser({})
+        localStorage.clear()
+    }
+    return (
+        <>
+            <h3> Welcome {user?.email} with no props  </h3>
+            <button onClick={() => history.goBack()}>GO back</button>
+            <button onClick={logOut}>Log Out</button>
+        </>
+    )
+}
+
 
 export default Profile;

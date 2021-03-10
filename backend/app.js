@@ -19,7 +19,7 @@ mongoose
 app.use(
   cors({
     credentials: true,
-    origin: ['http://localhost:3000', 'iron-clad.netlify.app'], //Swap this with the client url
+    origin: ['http://localhost:3000', 'https://iron-clad.herokuapp.com'], //Swap this with the client url
   })
 );
 
